@@ -147,9 +147,14 @@ Start-ScheduledTask -TaskName "JobPilot-AI Daily 9AM"
 | New Jobs | Jobs not seen in any previous run |
 | Skill Insights & ATS | Demand analysis + ATS recommendations |
 
+**Output Report**
+<img width="1346" height="489" alt="Excel Report" src="https://github.com/user-attachments/assets/a02a9940-5455-496a-9bda-0b3875dc9b3a" />
+
+**AI fit score- Pre-scores each job (rule-based) to rank the field. Claude reads the top candidates and reasons about fit, returning
+   a fit score, seniority match, matched/missing skills, and a rationale.**
+   
 <img width="276" height="440" alt="AI Fit score" src="https://github.com/user-attachments/assets/9a4068a7-146e-4967-a306-0baeef931bd6" />
 
-<img width="1346" height="489" alt="Excel Report" src="https://github.com/user-attachments/assets/a02a9940-5455-496a-9bda-0b3875dc9b3a" />
 
 ## Troubleshooting
 - **Empty report / "No jobs collected":** check `.env` has valid Adzuna keys;
