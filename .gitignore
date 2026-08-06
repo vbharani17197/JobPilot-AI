@@ -1,0 +1,25 @@
+# Secrets
+.env
+
+# Generated outputs
+output/*.xlsx
+data/jobs_history.csv
+logs/*.log
+
+# Resume (personal)
+resume/*.pdf
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+dist/
+build/
+.pytest_cache/
+.poetry/
+
+# OS
+.DS_Store
+Thumbs.db

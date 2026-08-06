@@ -1,0 +1,234 @@
+# =============================================================
+# JobPilot-AI configuration
+# Everything tunable lives here. No code changes needed for
+# normal day-to-day adjustments.
+# =============================================================
+
+candidate:
+  name: "Bharani Vijayakumar"
+  experience_years: 6.5           # 6+ years (CloudOps / SRE)
+  current_ctc_lpa: 10.3
+  expected_ctc_lpa: 13.0
+  notice_period_days: 0           # Immediate joiner
+  preferred_locations:
+    - Remote
+    - Chennai
+    - Bengaluru
+    - Coimbatore
+    - Madurai
+    - Hyderabad
+    - Tamil Nadu
+
+resume:
+  # Path is relative to the project root. Drop your PDF here.
+  path: "resume/resume.pdf"
+  # If the PDF can't be read for any reason, these seed skills are
+  # used as a fallback so the agent still runs. Resume-extracted
+  # skills always take precedence over this list when available.
+  fallback_skills:
+    - Incident Management
+    - Change Management
+    - RCA
+    - Service Restoration
+    - SLA Management
+    - Reliability Engineering
+    - SRE
+    - Site Reliability Engineering
+    - Production Support
+    - Application Support
+    - CloudOps
+    - AWS
+    - IAM
+    - OpenShift
+    - Container Platforms
+    - Linux
+    - Windows Server
+    - Infrastructure Management
+    - F5 Load Balancer
+    - Datadog
+    - AppDynamics
+    - APM
+    - Log Management
+    - Log Analysis
+    - Alert Tuning
+    - Dashboards
+    - Health Checks
+    - Capacity Monitoring
+    - Jenkins
+    - Bitbucket
+    - GitHub
+    - CI/CD
+    - Deployment
+    - Rollback
+    - Terraform
+    - Linux CLI
+    - ServiceNow
+    - CA Service Desk Manager
+    - ITSM
+    - Runbooks
+    - SOPs
+    - Troubleshooting
+    - Agentic AI
+  fallback_certifications:
+    - "Site Reliability Engineering (SRE) Foundation - Infosys"
+    - "Infosys Certified Terraform Associate"
+    - "Infosys Certified AWS SysOps Administrator, Associate"
+    - "AWS Certified Cloud Practitioner"
+    - "Lean Six Sigma Green Belt"
+    - "Six Sigma Yellow Belt"
+
+# -------------------------------------------------------------
+# Target roles. Each is searched against every enabled source.
+# -------------------------------------------------------------
+target_roles:
+  - Site Reliability Engineer
+  - SRE Engineer
+  - Production Support Engineer
+  - Application Support Engineer
+  - Infrastructure Support Engineer
+  - Technical Support Engineer
+  - Cloud Support Engineer
+  - Platform Support Engineer
+  - IT Operations Engineer
+  - Monitoring Engineer
+  - Linux Support Engineer
+  - DevOps Support Engineer
+  - Operations Engineer
+  - L2 Support Engineer
+  - L3 Support Engineer
+
+# Extra keyword fragments used to expand/augment searches and to
+# detect close title variations automatically.
+search_keywords:
+  - SRE
+  - Site Reliability Engineering
+  - Production Support
+  - Application Support
+  - Linux Support
+  - Infrastructure Support
+  - AWS Support
+  - Monitoring
+  - Cloud Support
+  - IT Operations
+  - Technical Support
+  - Incident Management
+  - Troubleshooting
+  - Platform Support
+  - Reliability Engineering
+
+# Skills taxonomy: canonical skill -> list of aliases/variants that
+# may appear in job descriptions. Used for skill matching and ATS.
+skills_taxonomy:
+  Datadog: [datadog, dd apm]
+  AppDynamics: [appdynamics, app dynamics, appd]
+  AWS: [aws, amazon web services, ec2, lambda, cloudwatch, s3, iam]
+  OpenShift: [openshift, ocp]
+  Kubernetes: [kubernetes, k8s, eks, container orchestration]
+  Container Platforms: [container platforms, containers, docker, containerization]
+  Linux: [linux, unix, rhel, centos, ubuntu]
+  Windows Server: [windows server, windows, active directory]
+  Terraform: [terraform, iac, infrastructure as code]
+  Incident Management: [incident management, incident response, major incident, service restoration]
+  SRE: [sre, site reliability, reliability engineering]
+  Monitoring: [monitoring, observability, prometheus, grafana, splunk, nagios, new relic]
+  ITIL: [itil, itsm, change management, sla management]
+  ServiceNow: [servicenow, snow, ca service desk manager, service desk]
+  Load Balancing: [f5, load balancer, load balancing, traffic distribution]
+  CI/CD: [ci/cd, cicd, jenkins, bitbucket, github, gitlab, github actions, deployment, rollback]
+  Scripting: [shell, bash, python, scripting, automation]
+  SQL: [sql, mysql, postgresql, oracle]
+  Troubleshooting: [troubleshooting, root cause, rca, debugging]
+  On-call: [on-call, oncall, pagerduty, opsgenie]
+  Networking: [networking, dns, tcp/ip, load balancer]
+  Terraform: [terraform, iac, infrastructure as code]
+  Ansible: [ansible, configuration management]
+  Docker: [docker, containers, containerization]
+
+# Roles considered "core" for relevance scoring (highest weight).
+high_relevance_titles:
+  - site reliability
+  - sre
+  - production support
+  - application support
+  - platform support
+  - infrastructure support
+  - devops
+
+# -------------------------------------------------------------
+# Search sources. Toggle each on/off. Keys come from environment
+# variables (.env) or are filled here (less secure).
+# -------------------------------------------------------------
+sources:
+  adzuna:
+    enabled: true
+    country: in
+    results_per_query: 30
+    max_days_old: 30           # Adzuna 'max_days_old' filter
+    # Credentials read from env: ADZUNA_APP_ID / ADZUNA_APP_KEY
+  jsearch:
+    enabled: true             # Set true after adding a RapidAPI key
+    country: in
+    date_posted: month         # today | 3days | week | month | all
+    # Credential read from env: JSEARCH_API_KEY (RapidAPI key)
+  naukri:
+    enabled: true              # Best-effort bonus source. May yield 0 rows.
+    max_pages: 2
+    request_delay_seconds: 3   # Be polite; avoid hammering.
+
+# -------------------------------------------------------------
+# LLM evaluation (the agentic layer).
+# When enabled, Claude reads each job description and reasons about
+# fit against your resume: holistic fit score, seniority match,
+# matched/missing skills, a one-line rationale, and a shortlist flag.
+# Falls back to rule-based scoring if disabled or the API fails.
+# -------------------------------------------------------------
+llm:
+  enabled: true
+  model: claude-haiku-4-5      # fast + cheap; ideal for this volume
+  max_jobs_per_run: 60         # cap LLM calls for cost control
+  batch_size: 15               # jobs per API request
+  # How much the LLM's judgement influences the final relevance signal
+  # (0.0 = ignore LLM, 1.0 = LLM fully replaces rule-based relevance).
+  blend_weight: 0.7
+  # Credential read from env: ANTHROPIC_API_KEY
+
+# -------------------------------------------------------------
+# Ranking weights (must sum to 100).
+# -------------------------------------------------------------
+ranking:
+  weights:
+    skill_match: 40
+    experience_match: 20
+    ats_compatibility: 15
+    job_relevance: 10
+    company_assessment: 10
+    location_preference: 5
+  # Recency preference (days) -> small bonus folded into relevance.
+  recency_tiers_days: [1, 3, 7, 14]
+
+# -------------------------------------------------------------
+# Output / persistence
+# -------------------------------------------------------------
+paths:
+  history_csv: "data/jobs_history.csv"
+  output_dir: "output"
+  log_file: "logs/agent.log"
+
+history:
+  retention_days: 30
+
+output:
+  top_overall: 20
+  top_company_site: 20
+
+# URL resolution: how many redirect hops to follow when resolving
+# an apply URL to a final ATS/company page.
+url_resolution:
+  enabled: true
+  max_redirects: 5
+  timeout_seconds: 10
+
+logging:
+  level: INFO                  # DEBUG | INFO | WARNING | ERROR
+  rotation: "10 MB"
+  retention: "30 days"
