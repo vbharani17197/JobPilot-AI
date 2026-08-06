@@ -1,4 +1,5 @@
 # JobPilot-AI
+<<<<<<< HEAD
 
 An **AI agent** for job discovery, built for a Site Reliability / Production
 Support profile. It searches job sources, uses **Claude (Anthropic API) to
@@ -188,3 +189,6 @@ Start-ScheduledTask -TaskName "JobPilot-AI Daily 9AM"
 ## Constraints honored
 No database (CSV persistence only). No fabricated data. Deduplicated results.
 Recent jobs preferred. Lightweight, local execution. LinkedIn not used.
+=======
+Lightweight AI-powered job discovery agent that aggregates jobs from multiple APIs, uses Claude to score resume fit, ranks results, tracks fetched jobs to avoid duplicates with periodic history pruning, and generates daily Excel reports. Reliable local automation with CSV-based history—no database or web app.
+>>>>>>> 4d091a6c8591b0f98e77aabb698b190bbb6c8f06
