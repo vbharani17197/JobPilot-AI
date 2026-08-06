@@ -176,6 +176,11 @@ Start-ScheduledTask -TaskName "JobPilot-AI Daily 9AM"
 
 ---
 
+<img width="276" height="440" alt="AI Fit score" src="https://github.com/user-attachments/assets/9a4068a7-146e-4967-a306-0baeef931bd6" />
+
+<img width="1346" height="489" alt="Excel Report" src="https://github.com/user-attachments/assets/a02a9940-5455-496a-9bda-0b3875dc9b3a" />
+
+---
 ## Troubleshooting
 - **Empty report / "No jobs collected":** check `.env` has valid Adzuna keys;
   inspect `logs/agent.log`.
