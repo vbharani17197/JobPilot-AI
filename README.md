@@ -1,5 +1,4 @@
 # JobPilot-AI
-<<<<<<< HEAD
 
 An **AI agent** for job discovery, built for a Site Reliability / Production
 Support profile. It searches job sources, uses **Claude (Anthropic API) to
@@ -21,8 +20,6 @@ agent decides which jobs are worth shortlisting based on what it reads — not
 just keyword overlap. If the API is unavailable, it falls back automatically
 to rule-based scoring and still produces the report.
 
----
-
 ## What it does (daily)
 
 1. Parses your resume PDF for skills, certifications, ATS keywords, experience.
@@ -38,11 +35,8 @@ to rule-based scoring and still produces the report.
 7. Compares against `data/jobs_history.csv` to flag newly discovered jobs.
 8. Generates `output/Job_Search_Report_YYYY_MM_DD.xlsx` with four worksheets.
 
----
-
 ## Architecture at a glance
 
-```
 resume.pdf ─► resume_parser ─┐
                              ▼
    ┌── Adzuna (API) ───┐  pre-score ──► LLM judge (Claude) ──► re-rank
@@ -51,15 +45,12 @@ resume.pdf ─► resume_parser ─┐
                                           history (CSV) ──► report (XLSX)
                                                               ▲
                                                           insights
-```
 
 Each **source is failure-isolated**: if one is unavailable (e.g. Naukri is
 blocking that day), it logs a warning, contributes zero rows, and the run
 completes normally on the remaining sources. The **LLM layer is also
 failure-soft**: no key or an API error means the agent falls back to
 rule-based scoring. Adzuna + rule-based scoring alone always produce a report.
-
----
 
 ## Important expectations
 
@@ -73,11 +64,8 @@ rule-based scoring. Adzuna + rule-based scoring alone always produce a report.
 - **JSearch is optional** and off by default. Enable it for Indeed coverage
   once you've added a free RapidAPI key.
 
----
-
 ## Folder structure
 
-```
 JobPilot-AI/
 ├── docs/requirements.md          # the original spec
 ├── resume/resume.pdf             # YOU add this
@@ -92,9 +80,6 @@ JobPilot-AI/
 ├── pyproject.toml                # Poetry deps
 ├── .env.example                  # copy to .env, add API keys
 └── README.md
-```
-
----
 
 ## Setup
 
@@ -114,26 +99,22 @@ JobPilot-AI/
    To run without AI, set `llm.enabled: false` in `config/settings.yaml`.
 
 ### 2. Configure secrets
-```bash
+bash
 copy .env.example .env        # Windows
 # then edit .env and paste your Adzuna keys
-```
 
 ### 3. Add your resume
 Drop your PDF at `resume/resume.pdf` (the path is set in `config/settings.yaml`).
 
 ### 4. Install dependencies
-```bash
+bash
 poetry install
-```
 
 ### 5. Run once
-```bash
+bash
 poetry run jobpilot
-```
-Open the generated file in `output/`.
 
----
+Open the generated file in `output/`.
 
 ## Optional: enable Indeed coverage (JSearch)
 1. Subscribe to the free tier:
@@ -141,20 +122,14 @@ Open the generated file in `output/`.
 2. Put your RapidAPI key in `.env` as `JSEARCH_API_KEY`.
 3. In `config/settings.yaml` set `sources.jsearch.enabled: true`.
 
----
-
 ## Schedule it for 9:00 AM daily (Windows)
 From an **Admin** PowerShell prompt in the project folder:
-```powershell
+powershell
 powershell -ExecutionPolicy Bypass -File scripts\register_task.ps1
-```
-Test it immediately:
-```powershell
-Start-ScheduledTask -TaskName "JobPilot-AI Daily 9AM"
-```
-(Your machine's local time should be IST for 9 AM IST.)
 
----
+Test it immediately:
+powershell
+Start-ScheduledTask -TaskName "JobPilot-AI Daily 9AM"
 
 ## Configuration cheat-sheet (`config/settings.yaml`)
 - `target_roles` / `search_keywords` — what to search for.
@@ -162,8 +137,6 @@ Start-ScheduledTask -TaskName "JobPilot-AI Daily 9AM"
 - `ranking.weights` — must sum to 100.
 - `candidate.preferred_locations` — influences ranking, never excludes.
 - `output.top_overall` / `top_company_site` — worksheet sizes.
-
----
 
 ## The Excel report
 
@@ -174,13 +147,10 @@ Start-ScheduledTask -TaskName "JobPilot-AI Daily 9AM"
 | New Jobs | Jobs not seen in any previous run |
 | Skill Insights & ATS | Demand analysis + ATS recommendations |
 
----
-
 <img width="276" height="440" alt="AI Fit score" src="https://github.com/user-attachments/assets/9a4068a7-146e-4967-a306-0baeef931bd6" />
 
 <img width="1346" height="489" alt="Excel Report" src="https://github.com/user-attachments/assets/a02a9940-5455-496a-9bda-0b3875dc9b3a" />
 
----
 ## Troubleshooting
 - **Empty report / "No jobs collected":** check `.env` has valid Adzuna keys;
   inspect `logs/agent.log`.
@@ -189,11 +159,7 @@ Start-ScheduledTask -TaskName "JobPilot-AI Daily 9AM"
   the agent falls back to seeded skills meanwhile.
 - **Weights error on startup:** `ranking.weights` must sum to 100.
 
----
-
 ## Constraints honored
 No database (CSV persistence only). No fabricated data. Deduplicated results.
 Recent jobs preferred. Lightweight, local execution. LinkedIn not used.
-=======
-Lightweight AI-powered job discovery agent that aggregates jobs from multiple APIs, uses Claude to score resume fit, ranks results, tracks fetched jobs to avoid duplicates with periodic history pruning, and generates daily Excel reports. Reliable local automation with CSV-based history—no database or web app.
->>>>>>> 4d091a6c8591b0f98e77aabb698b190bbb6c8f06
+==========================================================================================================================================
